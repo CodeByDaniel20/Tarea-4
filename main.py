@@ -1,36 +1,11 @@
 # Importa la librería principal para crear interfaces gráficas
 import tkinter as tk
 from tkinter import ttk, messagebox
-# Importa herramientas para crear clases abstractas
-from abc import ABC, abstractmethod
+from cliente import Cliente
  # daniel Antonio Juli
-# ------------------ CLASE ABSTRACTA ------------------
+# ------------------ VARIABLES GLOBALES ------------------
 
-# Clase base 
-class Abstracta(ABC):
 
-    # Constructor que guarda la información del cliente
-    def __init__(self, nombres, ndocumento, correo, telefono, usuario, contraseña):
-        # Atributos privados (no se acceden directamente desde fuera)
-        self.__nombres = nombres
-        self.__ndocumento = ndocumento
-        self.__correo = correo
-        self.__telefono = telefono
-        self.__usuario = usuario
-        self.__contraseña = contraseña
-    
-    
-# ------------------ CLASE HIJA ------------------
-
-# Clase Cliente que hereda de Abstracta
-class Cliente(Abstracta):
-
-    # Constructor que envía los datos a la clase padre
-    def __init__(self, nombres, ndocumento, correo, telefono, usuario, contraseña):
-        super().__init__(nombres, ndocumento, correo, telefono, usuario, contraseña)
- 
-       
-# ------------------ FUNCIONES ------------------
 
 # Lista donde se almacenan los clientes registrados
 lista_cliente_registrados = [] 
