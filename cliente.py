@@ -20,3 +20,9 @@ class Cliente(Abstracta):
     # Constructor que envía los datos a la clase padre
     def __init__(self, nombres, ndocumento, correo, telefono, usuario, contraseña):
         super().__init__(nombres, ndocumento, correo, telefono, usuario, contraseña)
+
+    def get_usuario(self):
+        return self._Abstracta__usuario
+
+    def get_contraseña(self):
+        return self._Abstracta__contraseña

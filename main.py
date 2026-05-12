@@ -2,6 +2,13 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from cliente import Cliente
+
+
+from excepciones import *
+from logs import configurar_log
+logger = configurar_log("main")
+import tkinter as tk
+from tkinter import ttk, messagebox
  # daniel Antonio Juli
 # ------------------ VARIABLES GLOBALES ------------------
 
@@ -60,44 +67,44 @@ def registrar():
     # Validación del nombre (solo letras)
     if not entry_nombre.get().strip().replace(" ", "").isalpha():
         marcar_error(entry_nombre)
-        hay_error = True
+        raise NombreInvalidoError()
  
     # Validación del tipo de documento
     if "Selecciona" in combo_documento.get() or combo_documento.get() == "":
         combo_documento.config(foreground="red")
-        hay_error = True
+        raise TipoDocumentoInvalidoError()
  
     # Validación del documento (solo números)
     if not entry_ndocumento.get().strip().isdigit():
         marcar_error(entry_ndocumento)
-        hay_error = True
+        raise NumeroDocumentoInvalidoError()
  
 
     # Validación del correo
     correo = entry_correo.get().strip()
     if "@" not in correo or "." not in correo:
         marcar_error(entry_correo)
-        hay_error = True
+        raise CorreoInvalidoError()
  
     # Validación del teléfono
     if not entry_telefono.get().strip().isdigit():
         marcar_error(entry_telefono)
-        hay_error = True
+        raise TelefonoInvalidoError()
  
     # Validación del usuario
     if not entry_usuario.get().strip().replace(" ", "").isalpha():
         marcar_error(entry_usuario)
-        hay_error = True
+        raise UsuarioInvalidoError()
  
     # Validación de la contraseña
     if len(entry_contraseña.get()) < 4:
         marcar_error(entry_contraseña)
-        hay_error = True
+        raise ContrasenaInvalidaError()
  
     # Validación de confirmación de contraseña
     if entry_contraseña.get() != entry_contraseña2.get():
         marcar_error(entry_contraseña2)
-        hay_error = True
+        raise ContrasenaNoCoincideError()
  
 
     # Si hay errores, muestra mensaje y detiene el proceso
@@ -156,32 +163,42 @@ def abrir_ventana_principal():
               command=cerrar).pack(pady=10)
  
 
-# Función para iniciar sesión
 def iniciar_sesion():
 
-    # Obtiene datos del login
-    user = usuario.get()
-    contra = contraseña.get()
+    try:
+        user = usuario.get().strip()
+        contra = contraseña.get().strip()
 
-    encontrado = False
+        # VALIDACIONES
+        if not user:
+            raise UsuarioLoginVacioError()
 
-    # Recorre la lista de clientes registrados
-    for cliente in lista_cliente_registrados: 
+        if not contra:
+            raise ContrasenaLoginVaciaError()
 
-        # Compara usuario y contraseña
-        if cliente._Abstracta__usuario == user and cliente._Abstracta__contraseña == contra:
-            encontrado = True
-            break
+        encontrado = False
 
-    # Si encuentra el usuario
-    if encontrado:
-        ventana.withdraw()  # oculta la ventana
+        for cliente in lista_cliente_registrados:
+            if cliente.get_usuario() == user and cliente.get_contraseña() == contra:
+                encontrado = True
+                break
+
+        if not encontrado:
+            raise UsuarioNoEncontradoError()
+
+    except Exception as e:
+        logger.error(f"Error en login: {e}")
+        messagebox.showerror("Error", str(e))
+        return
+
+    else:
+        logger.info(f"Login exitoso: {user}")
+        ventana.withdraw()
         limpiar_campos_ini_sesion()
         abrir_ventana_principal()
-    
-    # Si no encuentra el usuario
-    else:
-        messagebox.showerror("Error", "Usuario o contraseña incorrectos")
+
+    finally:
+        print("Intento de login finalizado")
         
 
     # Función interna para mover el foco con Enter
