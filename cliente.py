@@ -26,3 +26,16 @@ class Cliente(Abstracta):
 
     def get_contraseña(self):
         return self._Abstracta__contraseña
+
+    # Getters adicionales para evitar acceso a atributos privados
+    def get_nombre(self):
+        return self._Abstracta__nombres
+
+    def get_ndocumento(self):
+        return self._Abstracta__ndocumento
+
+    def get_correo(self):
+        return self._Abstracta__correo
+
+    def get_telefono(self):
+        return self._Abstracta__telefono

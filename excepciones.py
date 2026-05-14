@@ -78,3 +78,9 @@ class ReservaInvalidaError(SoftwareTJError):
 class ClienteNoValidoError(SoftwareTJError):
     def __init__(self):
         super().__init__("Cliente no válido para realizar la reserva.")
+
+
+# ---------------- EXCEPCIONES DE RESERVA ESPECIALES ----------------
+class ReservaCanceladaError(SoftwareTJError):
+    def __init__(self):
+        super().__init__("La reserva ya está cancelada.")

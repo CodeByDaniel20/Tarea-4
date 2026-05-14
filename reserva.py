@@ -3,6 +3,7 @@ from datetime import datetime
 from cliente import Cliente
 from excepciones import *
 from logs import configurar_log
+from servicios import servicios
 
 logger = configurar_log("reservas")
 
@@ -14,6 +15,10 @@ class Reserva:
     def __init__(self, cliente: Cliente, servicio, fecha_inicio, fecha_fin):
 
         try:
+            # -------- VALIDAR DISPONIBILIDAD DE SERVICIO --------
+            if not servicios.esta_disponible(servicio):
+                raise ServicioNoDisponibleError()
+
             # -------- VALIDAR CLIENTE --------
             if not isinstance(cliente, Cliente):
                 raise ClienteNoValidoError()
@@ -59,9 +64,9 @@ class Reserva:
         try:
             return (
                 f"--- RESERVA ---\n"
-                f"Cliente: {self.__cliente._Abstracta__nombres}\n"
-                f"Documento: {self.__cliente._Abstracta__ndocumento}\n"
-                f"Correo: {self.__cliente._Abstracta__correo}\n"
+                f"Cliente: {self.__cliente.get_nombre()}\n"
+                f"Documento: {self.__cliente.get_ndocumento()}\n"
+                f"Correo: {self.__cliente.get_correo()}\n"
                 f"Servicio: {self.__servicio}\n"
                 f"Fecha inicio: {self.__fecha_inicio}\n"
                 f"Fecha fin: {self.__fecha_fin}\n"
