@@ -1,8 +1,0 @@
-# Ignore simulation scripts and IDE artifacts
-scripts/
-__pycache__/
-.vscode/
-*.pyc
-
-# Keep the main project files and the log tracked
-# (software_tj.log should remain tracked)
