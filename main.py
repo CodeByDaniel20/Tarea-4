@@ -129,6 +129,11 @@ def abrir_ventana_principal():
                                   state="readonly", width=30)
     combo_servicio.set("Selecciona servicio...")
     combo_servicio.grid(row=0, column=1, padx=10)
+
+    # Etiqueta para mostrar descripción y costo estimado del servicio
+    label_info_servicio = tk.Label(marco_reservas, text="Descripción: N/A | Costo estimado: N/A",
+                                   font=("Arial", 10), anchor="w")
+    label_info_servicio.grid(row=0, column=2, padx=10)
     
     # Fecha inicio
     tk.Label(marco_reservas, text="Fecha Inicio (YYYY-MM-DD HH:MM)").grid(row=1, column=0, padx=10, pady=10)
@@ -141,7 +146,38 @@ def abrir_ventana_principal():
     entry_fecha_fin = tk.Entry(marco_reservas, width=33)
     entry_fecha_fin.insert(0, (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d 18:00"))
     entry_fecha_fin.grid(row=2, column=1, padx=10)
+    entry_fecha_fin.bind("<FocusOut>", lambda e: actualizar_info_servicio())
     
+    def actualizar_info_servicio():
+        """Actualiza la etiqueta con la descripción y costo estimado del servicio seleccionado."""
+        try:
+            servicio_nombre = combo_servicio.get()
+            if not servicio_nombre or 'Selecciona' in servicio_nombre:
+                label_info_servicio.config(text="Descripción: N/A | Costo estimado: N/A")
+                return
+
+            # obtener objeto servicio y calcular duración
+            try:
+                fecha_ini = datetime.strptime(entry_fecha_inicio.get(), "%Y-%m-%d %H:%M")
+                fecha_fin = datetime.strptime(entry_fecha_fin.get(), "%Y-%m-%d %H:%M")
+                duration_hours = (fecha_fin - fecha_ini).total_seconds() / 3600.0
+            except Exception:
+                duration_hours = 0.0
+
+            servicio_obj = servicios.get_servicio(servicio_nombre)
+            desc = servicio_obj.descripcion()
+            costo = 'N/A'
+            try:
+                costo = servicio_obj.calcular_costo(duration_hours, impuesto=0.0, descuento=0.0)
+            except Exception:
+                costo = 'N/A'
+
+            label_info_servicio.config(text=f"Descripción: {desc} | Costo estimado: {costo}")
+        except Exception:
+            label_info_servicio.config(text="Descripción: N/A | Costo estimado: N/A")
+
+    combo_servicio.bind("<<ComboboxSelected>>", lambda e: actualizar_info_servicio())
+
     def crear_reserva():
         """Crea una nueva reserva"""
         try:

@@ -1,0 +1,21 @@
+2026-05-16 09:12:19 - INFO - [reservas] - Reserva creada correctamente
+2026-05-16 09:15:11 - INFO - [simulador] - Registro OK: ana
+2026-05-16 09:15:11 - INFO - [simulador] - Registro OK: luis
+2026-05-16 09:15:11 - ERROR - [simulador] - Registro FALLIDO (maria): Nombre inválido. Solo se permiten letras.
+2026-05-16 09:15:11 - ERROR - [simulador] - Registro FALLIDO (carlos): Correo inválido. Debe contener @ y .
+2026-05-16 09:15:11 - INFO - [simulador] - Registro OK: vero
+2026-05-16 09:15:11 - INFO - [reservas] - Reserva creada correctamente
+2026-05-16 09:15:11 - INFO - [simulador] - Reserva creada OK: Sala para ana
+2026-05-16 09:15:11 - ERROR - [reservas] - Error al crear reserva: El servicio no está disponible.
+2026-05-16 09:15:11 - ERROR - [simulador] - Reserva FALLIDA (ServicioInexistente): No se puede crear la reserva con los datos ingresados.
+2026-05-16 09:15:11 - ERROR - [reservas] - Error al crear reserva: La fecha de inicio no puede ser mayor a la fecha final.
+2026-05-16 09:15:11 - ERROR - [simulador] - Reserva FALLIDA (Sala): No se puede crear la reserva con los datos ingresados.
+2026-05-16 09:15:11 - ERROR - [reservas] - Error al crear reserva: El servicio no está disponible.
+2026-05-16 09:15:11 - ERROR - [simulador] - Reserva FALLIDA (AlquilerEquipo): No se puede crear la reserva con los datos ingresados.
+2026-05-16 09:15:11 - INFO - [reservas] - Reserva creada correctamente
+2026-05-16 09:15:11 - INFO - [simulador] - Reserva creada OK: AlquilerEquipo para vero
+2026-05-16 09:15:11 - INFO - [reservas] - Reserva cancelada correctamente
+2026-05-16 09:15:11 - INFO - [simulador] - Reserva cancelada OK: <servicios.Sala object at 0x000002272C624510> para ana
+2026-05-16 09:15:11 - ERROR - [reservas] - Error al cancelar reserva: La reserva ya está cancelada.
+2026-05-16 09:15:11 - ERROR - [simulador] - Cancelación FALLIDA: La reserva ya está cancelada.
+2026-05-16 09:15:11 - INFO - [simulador] - Simulación finalizada: 3 clientes, 2 reservas
