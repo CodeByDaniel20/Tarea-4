@@ -4,6 +4,11 @@ from abc import ABC, abstractmethod
 import math
 
 
+def formatear_cop(valor):
+	"""Formatea un número como moneda COP sin decimales."""
+	return f"$ {valor:,.0f} COP".replace(",", ".")
+
+
 class Servicio(ABC):
 	"""Clase abstracta que representa un servicio genérico."""
 
@@ -34,7 +39,7 @@ class Servicio(ABC):
 
 
 class Sala(Servicio):
-	def __init__(self, nombre="Sala", disponible=True, base_cost_per_hour=50.0):
+	def __init__(self, nombre="Sala", disponible=True, base_cost_per_hour=120000.0):
 		super().__init__(nombre, disponible, base_cost_per_hour)
 
 	def calcular_costo(self, duration_hours: float, impuesto: float = 0.0, descuento: float = 0.0):
@@ -44,11 +49,11 @@ class Sala(Servicio):
 		return round(cost, 2)
 
 	def descripcion(self):
-		return f"Sala - {self._nombre} (por hora: {self._base_cost})"
+		return f"Sala - {self._nombre} (por hora: {formatear_cop(self._base_cost)})"
 
 
 class AlquilerEquipo(Servicio):
-	def __init__(self, nombre="AlquilerEquipo", disponible=True, base_cost_per_day=200.0):
+	def __init__(self, nombre="AlquilerEquipo", disponible=True, base_cost_per_day=300000.0):
 		# store base_cost as per-day
 		super().__init__(nombre, disponible, base_cost_per_day)
 
@@ -60,11 +65,11 @@ class AlquilerEquipo(Servicio):
 		return round(cost, 2)
 
 	def descripcion(self):
-		return f"Alquiler de Equipo - {self._nombre} (por día: {self._base_cost})"
+		return f"Alquiler de Equipo - {self._nombre} (por día: {formatear_cop(self._base_cost)})"
 
 
 class Asesoria(Servicio):
-	def __init__(self, nombre="Asesoria", disponible=True, base_cost_per_hour=80.0):
+	def __init__(self, nombre="Asesoria", disponible=True, base_cost_per_hour=150000.0):
 		super().__init__(nombre, disponible, base_cost_per_hour)
 
 	def calcular_costo(self, duration_hours: float, impuesto: float = 0.0, descuento: float = 0.0):
@@ -77,7 +82,7 @@ class Asesoria(Servicio):
 		return round(cost, 2)
 
 	def descripcion(self):
-		return f"Asesoría especializada - {self._nombre} (por hora: {self._base_cost})"
+		return f"Asesoría especializada - {self._nombre} (por hora: {formatear_cop(self._base_cost)})"
 
 
 class Servicios:
@@ -85,9 +90,9 @@ class Servicios:
 
 	def __init__(self):
 		self._servicios = {
-			"Sala": Sala(nombre="Sala", disponible=True, base_cost_per_hour=50.0),
-			"AlquilerEquipo": AlquilerEquipo(nombre="AlquilerEquipo", disponible=True, base_cost_per_day=180.0),
-			"Asesoria": Asesoria(nombre="Asesoria", disponible=True, base_cost_per_hour=80.0),
+			"Sala": Sala(nombre="Sala", disponible=True, base_cost_per_hour=120000.0),
+			"AlquilerEquipo": AlquilerEquipo(nombre="AlquilerEquipo", disponible=True, base_cost_per_day=300000.0),
+			"Asesoria": Asesoria(nombre="Asesoria", disponible=True, base_cost_per_hour=150000.0),
 		}
 
 	def listar(self):

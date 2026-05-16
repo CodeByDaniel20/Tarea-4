@@ -8,6 +8,13 @@ from servicios import servicios, Servicio
 logger = configurar_log("reservas")
 
 
+def formatear_cop(valor):
+    """Formatea un número como moneda COP sin decimales."""
+    if valor is None:
+        return "N/A"
+    return f"$ {valor:,.0f} COP".replace(",", ".")
+
+
 # Clase que representa una reserva hecha por un cliente
 class Reserva:
 
@@ -85,7 +92,7 @@ class Reserva:
                 f"Fecha inicio: {self.__fecha_inicio}\n"
                 f"Fecha fin: {self.__fecha_fin}\n"
                 f"Duración (horas): {round(duration_hours, 2)}\n"
-                f"Costo estimado: {costo}\n"
+                f"Costo estimado: {formatear_cop(costo)}\n"
                 f"Estado: {self.__estado}\n"
                 f"Creada el: {self.__fecha_creacion}"
             )

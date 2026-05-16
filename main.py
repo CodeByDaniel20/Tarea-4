@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime, timedelta
 from cliente import Cliente
-from reserva import Reserva
+from reserva import Reserva, formatear_cop
 from servicios import servicios
 from excepciones import *
 from logs import configurar_log
@@ -166,13 +166,13 @@ def abrir_ventana_principal():
 
             servicio_obj = servicios.get_servicio(servicio_nombre)
             desc = servicio_obj.descripcion()
-            costo = 'N/A'
+            costo = None
             try:
                 costo = servicio_obj.calcular_costo(duration_hours, impuesto=0.0, descuento=0.0)
             except Exception:
-                costo = 'N/A'
+                costo = None
 
-            label_info_servicio.config(text=f"Descripción: {desc} | Costo estimado: {costo}")
+            label_info_servicio.config(text=f"Descripción: {desc} | Costo estimado: {formatear_cop(costo)}")
         except Exception:
             label_info_servicio.config(text="Descripción: N/A | Costo estimado: N/A")
 
@@ -220,7 +220,9 @@ def abrir_ventana_principal():
         listbox_reservas.delete(0, tk.END)
         for i, res in enumerate(lista_reservas):
             if res.get_cliente() == cliente_logueado:
-                texto = f"#{i+1} | {res.get_servicio()} | {res.get_estado()} | {res.get_fecha_inicio()}"
+                servicio = res.get_servicio()
+                nombre_servicio = servicio.get_nombre() if hasattr(servicio, "get_nombre") else str(servicio)
+                texto = f"#{i+1} | {nombre_servicio} | {res.get_estado()} | {res.get_fecha_inicio()}"
                 listbox_reservas.insert(tk.END, texto)
     
     def cancelar_reserva():
